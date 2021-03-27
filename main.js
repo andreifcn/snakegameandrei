@@ -93,8 +93,9 @@ function endGame() {
     document.getElementById('action-panel').appendChild(gameOverMessage);
 
     clearInterval(interval);
-
-    return document.getElementById('start-game').removeEventListener('keydown', function play(event) {});
+    buttonObj = document.getElementById('play');
+    
+    return buttonObj.remove();
 }
 
 // sets parameters for drawing using keyboard direction commands
