@@ -5,6 +5,7 @@ let w = 10;
 let x = 10;
 let y = 11;
 let direction;
+let currentDirection;
 let interval;
 let score = 0;
 let appleXPos;
@@ -22,7 +23,7 @@ function gameInit() {
     document.getElementById('play').style.opacity = 0;
 }
 
-// start the 2D drawing engine and generates map
+// starts the 2D drawing engine and generates the map
 
 function generateCanvas() {
 
@@ -33,7 +34,7 @@ function generateCanvas() {
 }
 
 // function to generate apple parameters and location
-// used by snakeGrowth
+// used by snakeGrowth to grow the snake
 
 function generateApple() {
 
@@ -70,6 +71,7 @@ function checkBoundaries() {
     }
 }
 
+// checks the movement array, snake's direction and its size
 // ends the game if the snake bites himself
 
 function checkSelfDamage(itemToAdd, snakeSize) {
@@ -78,12 +80,13 @@ function checkSelfDamage(itemToAdd, snakeSize) {
         let item1 = JSON.stringify(itemToAdd);
         let item2 = JSON.stringify(snakeSize[i]);
         if (item1 === item2) {
-            endGame();
+            return endGame();
         }
     }
 }
 
 // function stops the game engine and displays the game over message
+// if any of the game rules are broken
 
 function endGame() {
 
@@ -92,35 +95,16 @@ function endGame() {
     gameOverMessage.innerText = 'Game Over!';
     document.getElementById('action-panel').appendChild(gameOverMessage);
 
+    document.getElementById('play').removeEventListener('keydown', function play(event) {});
     clearInterval(interval);
     buttonObj = document.getElementById('play');
-    
     return buttonObj.remove();
 }
 
-// sets parameters for drawing using keyboard direction commands
-// draws the snake's movement and its body size
+// once the snake's direction has been set, this function starts drawing
+// the snake's movement and its body size
 
-function drawSnake(direction) {
-
-    switch(direction) {
-        case 'ArrowDown':
-            y += 3;
-            break;
-
-        case 'ArrowUp':
-            y -= 3;
-            break;
-
-        case 'ArrowRight':
-            x += 5;
-            break;
-
-        case 'ArrowLeft':
-            x -= 5;
-            break;
-
-    }
+function drawSnake() {
 
     itemToAdd = [[x], [y]];
     checkSelfDamage(itemToAdd, snakeSize);
@@ -136,17 +120,61 @@ function drawSnake(direction) {
     }
 }
 
-// keyboard listener, initates snake's movement painter
+// sets parameters for drawing using keyboard direction commands
+// this sets the snake's movement direction
+// and begins drawing
 
 function startGame() {
 
     document.getElementById('play').addEventListener('keydown', function play(event){
-    
-        clearInterval(interval);    
-        interval = setInterval(function() {
-            checkBoundaries();
-            snakeGrowth();
-            drawSnake(event.key);
-        }, 100); 
+        
+        if (event.key === 'ArrowDown' && currentDirection != 'ArrowUp') {
+            
+            clearInterval(interval); 
+            currentDirection = event.key;
+            interval = setInterval(function() {
+                checkBoundaries();
+                snakeGrowth();
+                y += 3;
+                drawSnake();
+                
+            }, 100); 
+
+        } else if (event.key === 'ArrowUp' && currentDirection != 'ArrowDown') {
+
+            clearInterval(interval); 
+            currentDirection = event.key;
+            interval = setInterval(function() {
+                checkBoundaries();
+                snakeGrowth();
+                y -= 3;
+                drawSnake();
+
+            }, 100);
+
+        } else if (event.key === 'ArrowRight' && currentDirection != 'ArrowLeft') {
+
+            clearInterval(interval); 
+            currentDirection = event.key;
+            interval = setInterval(function() {
+                checkBoundaries();
+                snakeGrowth();
+                x += 5;
+                drawSnake();
+
+            }, 100);
+
+        }  else if (event.key === 'ArrowLeft' && currentDirection != 'ArrowRight') {
+
+            clearInterval(interval); 
+            currentDirection = event.key;
+            interval = setInterval(function() {
+                checkBoundaries();
+                snakeGrowth();
+                x -= 5;
+                drawSnake();
+
+            }, 100);
+        }
     });
 }
