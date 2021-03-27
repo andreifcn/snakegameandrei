@@ -1,0 +1,54 @@
+body {
+    background-image: url("https://www.wallpapertip.com/wmimgs/4-43033_snake-wallpaper-black-background.jpg");
+}
+
+canvas {
+    position: absolute;
+    height: 370px;
+    width: 400px;
+    background-color:silver;
+    left: 39%;
+    top: 10%;
+}
+
+#game-score {
+    position: absolute;
+    top: 16%;
+    left: 21%;
+    font-size: 30px;
+    color:tomato;
+}
+
+#game-over-msg {
+    position: absolute;
+    top: 19%;
+    left: 20%;
+    color: red;
+    font-size: 30px;
+}
+
+button {
+    position: absolute;
+    top: 16%;
+    left: 20%;
+    font-size: 30px;
+    size: 20px;
+}
+
+#index {
+    position: absolute;
+    color:wheat;
+    top: 9%;
+    left: 20%;
+    font-size: 40px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.tips {
+    position: absolute;
+    top:24%;
+    left: 20%;
+    height: 200px;
+    width: 200px;
+    color:slateblue;
+}
