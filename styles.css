@@ -1,12 +1,13 @@
 body {
-    background-image: url("https://www.wallpapertip.com/wmimgs/4-43033_snake-wallpaper-black-background.jpg");
+    background-image: url("https://raceamplitude.com/amp_/wp-content/uploads/2017/08/background-retro8.jpg");
 }
 
 canvas {
     position: absolute;
+    outline: #bc8f8f 1px solid;
     height: 370px;
     width: 400px;
-    background-color:silver;
+    background-color:black;
     left: 39%;
     top: 10%;
 }
@@ -37,7 +38,7 @@ button {
 
 #index {
     position: absolute;
-    color:wheat;
+    color:sandybrown;
     top: 9%;
     left: 20%;
     font-size: 40px;
@@ -50,5 +51,5 @@ button {
     left: 20%;
     height: 200px;
     width: 200px;
-    color:slateblue;
+    color:darkturquoise;
 }
