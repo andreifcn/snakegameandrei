@@ -111,7 +111,7 @@ function drawSnake() {
 
     snakeSize.push([[x], [y]]);
 
-    ctx.fillStyle = '#4507A1';
+    ctx.fillStyle = '#bc8f8f';
     ctx.fillRect(x, y, w, h);
 
     if (snakeSize.length > score + 3) {
