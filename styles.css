@@ -1,55 +1,97 @@
 body {
     background-image: url("https://raceamplitude.com/amp_/wp-content/uploads/2017/08/background-retro8.jpg");
+    background-size: 90%;
 }
 
-canvas {
-    position: absolute;
-    outline: #bc8f8f 1px solid;
-    height: 370px;
-    width: 400px;
-    background-color:black;
-    left: 39%;
-    top: 10%;
+#action-panel {
+    visibility: hidden;
+    width: 360px;
+    height: 291px;
+    border: solid #bc8f8f;
+    text-align: center;
+    margin-left: 38%;
+    margin-top: 5.2%;
+}
+
+.block {
+    display: hidden;
+    float:left;
+    height: 5px;
+    width: 5px;
+    background-color: black;
+    margin-left: 1%;
+    padding: 12px;
+    margin-bottom: 1%;
+}
+
+
+h2 {
+    color: teal;
+
 }
 
 #game-score {
     position: absolute;
-    top: 16%;
-    left: 21%;
+    top: 14%;
+    left: 27%;
     font-size: 30px;
     color:tomato;
 }
 
 #game-over-msg {
+    visibility: hidden;
     position: absolute;
     top: 19%;
-    left: 20%;
+    left: 26%;
     color: red;
     font-size: 30px;
-}
-
-button {
-    position: absolute;
-    top: 16%;
-    left: 20%;
-    font-size: 30px;
-    size: 20px;
 }
 
 #index {
     position: absolute;
     color:sandybrown;
     top: 9%;
-    left: 20%;
+    left: 26%;
     font-size: 40px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.tips {
+button {
+    position: absolute;
+    border:crimson solid;
+    background-color: black;
+    color:crimson;
+    top: 16%;
+    left: 26%;
+    font-size: 30px;
+    size: 20px;
+}
+
+#tip-box {
     position: absolute;
     top:24%;
-    left: 20%;
+    left: 26%;
     height: 200px;
     width: 200px;
     color:darkturquoise;
 }
+
+input[type=checkbox] {
+    vertical-align: middle;
+    display: inline-block;
+    position:absolute;
+    left: 20%;
+    bottom: 1px;
+}
+
+label {
+    display: block;
+    color: darkturquoise;
+}
+
+#render-select {
+    position: absolute;
+    left: 20%;
+    top: 25%;
+}
+
