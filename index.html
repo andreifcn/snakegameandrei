@@ -21,17 +21,19 @@
 
     <main>
       <a href="index.html" id="index">Snake 2D</a>
-      <div id="game-score">
+      <div id="menu">
+        <h1 class="message" id="game-over-msg">Game Over!</h1>
+        <h1 class="message" id="game-score"></h2>
+        <button type="button" id="play" onclick="initGame();">Play!</button>
       </div>
       <div id="action-panel">
-        <button type="button" id="play" onclick="gameInit();">Play!</button>
       </div>
-      <div class="tips">
-        <h3>Navigate the snake around the map using the keyboard arrows.</h3>
-      
-        <h3>Select Index to start over!</h3>
+      <div id="tip-box">
+        <h3 class="tips">Navigate the snake around the map using the keyboard arrows.</h3>
+        <h3 class="tips">Select Index to start over!</h3>
+      <div id="mode-select">
+        <script src="main.js"></script>
       </div>
-      <script src="main.js"></script>
     </main>
 
     <footer>
