@@ -2,7 +2,7 @@
 
 
 Hosted Live, PLAY THIS on:
-https://andreisnkp.tiiny.site/
+https://snakegamea.vercel.app/
 
 version 0.1
 first release
