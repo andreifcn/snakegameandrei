@@ -10,6 +10,6 @@ first release
 version 0.2 
 updated the event listener, improved css styles and selectors\
 
-version 0.3\
+version 0.3 
 fixed bug where the apple would spawn inside the snake's body
 
