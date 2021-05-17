@@ -25,7 +25,7 @@ function initSnakeData() {
         line: 0, 
         col: 0, 
         applePos: 0,
-        score: 0
+        score: -1
     }
 
     if (document.getElementById('map-size-select').value === 'small') {
