@@ -1,113 +1,171 @@
 
-let snakePosition = 0, line = 0, col = 0, applePos;
-let snakeSize = ['0'];
-let score = -1, interval, direction;
-
 function initGame() {
-
-    initBoard();
-    createApple();
-    actionBox();
+    
+    const mapData = initMapData();
+    let snake = initSnakeData();
+    
+    drawBoard(mapData);
+    createApple(snake, mapData);
+    actionBox(snake, mapData);
+    
+    document.getElementById('play').style.opacity = '0';
+    document.getElementById('action-panel').style.visibility = 'visible';
+    document.getElementById('game-settings').style.visibility = 'hidden';
 }
 
-function initBoard() {
 
-    document.getElementById('action-panel').style.visibility = 'visible';
-    document.getElementById('play').style.opacity = '0';
+function initSnakeData() {
 
-    for (let i = 0; i < 99; i++) {
+    let snake = {
+        snakeSize: ['0'],
+        speed: document.getElementById('speed-option-select').value,
+        mapMovement: '',
+        direction: '',
+        snakePosition: 0, 
+        line: 0, 
+        col: 0, 
+        applePos: 0,
+        score: 0
+    }
+
+    if (document.getElementById('map-size-select').value === 'small') {
+        snake.mapMovement = 11;
+    } else {
+        snake.mapMovement = 15;
+    }
+
+    return snake;
+}
+
+
+function initMapData() {
+
+    const mapData = {
+        mapSize: document.getElementById('map-size-select').value,
+        blocks:'',
+        mapStyle: '',
+        maxLine: 8,
+        maxCol: 10
+    }
+    
+    if (mapData.mapSize === 'small') {
+        mapData.style = 'height: 291px; width: 360px';
+        mapData.blocks = 99;
+        mapData.maxLine = 8;
+        mapData.maxCol = 10;
+
+    } else if (mapData.mapSize === 'large') {
+        mapData.style = 'height: 442px; width: 515px';
+        mapData.blocks = 195;
+        mapData.maxLine = 12;
+        mapData.maxCol = 14;
+
+    }
+
+    return mapData;
+}
+
+
+function drawBoard(mapData) {
+
+    document.getElementById('action-panel').style = mapData.style;
+
+    for (let i = 0; i < mapData.blocks; i++) {
         let block = document.createElement('DIV');
         block.id = i;
         block.className = 'block';
         document.getElementById('action-panel').appendChild(block);
     }
+
 }
 
 
-function createApple() {
+function createApple(snake, mapData) {
 
-    applePos = Math.floor(Math.random() * 99);
+    while (snake.snakePosition === snake.applePos) {
+        snake.applePos = Math.floor(Math.random() * mapData.blocks);
+    }
 
-    score++;
-    document.getElementById('game-score').innerText = 'Score: ' + score;
-
-    return document.getElementById(applePos).style.backgroundColor = 'red';
+    snake.score++;
+    document.getElementById('game-score').innerText = 'Score: ' + snake.score;
+    document.getElementById(snake.applePos).style.backgroundColor = 'red';
 }
 
 
-function growSnake() {
-    if (snakePosition === applePos) {
-        document.getElementById(applePos).innerHTML = '';
-        snakeSize.push(snakePosition);
-        createApple();
+function growSnake(snake, mapData) {
+
+    if (snake.snakePosition === snake.applePos) {
+        document.getElementById(snake.applePos).innerHTML = '';
+        snake.snakeSize.push(snake.snakePosition);
+        createApple(snake, mapData);
     }
 }
 
 
-function endGame() {
+function endGame(interval) {
 
     document.getElementById('game-over-msg').style.visibility = 'visible';
-    clearInterval(interval);
     removeEventListener('keydown', function setMovement(event) {});
+    clearInterval(interval);
     return document.getElementById('action-panel').innerHTML = innerHTML;
 }
 
 
-function checkBody(snakeSize) {
+function checkBody(snake, interval) {
 
-    if (snakeSize.indexOf(snakePosition) != -1) {
-        return endGame();
+    if (snake.snakeSize.indexOf(snake.snakePosition) != -1) {
+        return endGame(interval);
     } 
 }
 
 
-function drawSnake() {
+function drawSnake(snake) {
 
-    snakeSize.push(snakePosition);
+    snake.snakeSize.push(snake.snakePosition);
 
-    document.getElementById(snakePosition).style.backgroundColor = '#bc8f8f';
-    document.getElementById(snakeSize[0]).style.backgroundColor = 'black';
+    document.getElementById(snake.snakePosition).style.backgroundColor = '#bc8f8f';
+    document.getElementById(snake.snakeSize[0]).style.backgroundColor = 'black';
 
-    snakeSize.shift();
+    snake.snakeSize.shift();
 }
 
 
-function checkBorder() {
+function checkBorder(snake, mapData, interval) {
 
-    if (col < 0 || col > 10 ||
-        line < 0 || line > 8) {
-            return endGame();
+    if (snake.col < 0 || snake.col > mapData.maxCol ||
+        snake.line < 0 || snake.line > mapData.maxLine) {
+            return endGame(interval);
     }
 }
 
 
-function moveDirection(event) {
+function moveDirection(snake, event) {
 
     switch(event.key) {
         case 'ArrowUp':
-            line--;
-            snakePosition -= 11;
+            snake.line--;
+            snake.snakePosition -= snake.mapMovement;
             break;
 
         case 'ArrowDown':
-            line++;
-            snakePosition += 11;
+            snake.line++;
+            snake.snakePosition += snake.mapMovement;
             break;
 
         case 'ArrowLeft':
-            col--;
-            snakePosition--;
+            snake.col--;
+            snake.snakePosition--;
             break;
 
         case 'ArrowRight':
-            col++;
-            snakePosition++;
+            snake.col++;
+            snake.snakePosition++;
             break; 
     }
 }
 
 
-function checkDirection(event) {
+function checkDirection(event, direction) {
 
     if (event.key === 'ArrowDown' && direction === 'ArrowUp' ||
     event.key === 'ArrowUp' && direction ===  'ArrowDown' ||
@@ -119,20 +177,23 @@ function checkDirection(event) {
 }
 
 
-function actionBox () {
+function actionBox (snake, mapData) {
+   
+    let interval;
 
     window.addEventListener('keydown', function setMovement(event) {
 
-        if (checkDirection(event)) {
+        if (checkDirection(event, snake.direction)) {
             clearInterval(interval);
-            direction = event.key;
-            interval = setInterval(function() {
-                moveDirection(event);
-                checkBody(snakeSize);
-                checkBorder();
-                growSnake();
-                drawSnake();
-            }, 500);
+            snake.direction = event.key;
+            interval = (setInterval(function move() {
+
+                moveDirection(snake, event);
+                checkBody(snake, interval);
+                checkBorder(snake, mapData, interval);
+                growSnake(snake, mapData);
+                drawSnake(snake);
+            }, snake.speed));
         }
 
     });
