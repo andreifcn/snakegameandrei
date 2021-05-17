@@ -82,7 +82,9 @@ function drawBoard(mapData) {
 
 function createApple(snake, mapData) {
 
-    while (snake.snakePosition === snake.applePos) {
+    snake.applePos = Math.floor(Math.random() * mapData.blocks);
+
+    while (snake.snakeSize.indexOf(snake.applePos) !== -1) {
         snake.applePos = Math.floor(Math.random() * mapData.blocks);
     }
 
